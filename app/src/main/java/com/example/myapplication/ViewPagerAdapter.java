@@ -16,9 +16,9 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position) {
             case 0:
-                return new FirstFragment(); // Substitua pelo seu fragmento real
+                return new FirstFragment(); // Fragmento da aba 1 que exibe previsões do tempo
             case 1:
-                return new SecondFragment(); // Substitua pelo seu fragmento real
+                return new MapFragment(); // Substitua pelo fragmento do mapa
             default:
                 return new FirstFragment();
         }

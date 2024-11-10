@@ -4,6 +4,11 @@
 
     <!-- Permissão de acesso à internet -->
     <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- Permissão para usar a câmera para ler QR Code -->
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
 
     <application
         android:allowBackup="true"
@@ -15,6 +20,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31" >
+
+        <!-- Chave de API para Google Maps -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBtdwv0cUgCEZfOhsS5LSzWkeqm05gXsko" />
 
         <!-- Splash Screen Activity - Tela Inicial -->
         <activity
@@ -30,7 +40,7 @@
         <activity android:name=".MainActivity" android:exported="false" />
 
         <!-- Second Screen Activity -->
-        <activity android:name=".SecondScreenActivity" android:exported="false" />
+        <activity android:name=".SecondScreenActivity" android:exported="true" />
 
     </application>
 

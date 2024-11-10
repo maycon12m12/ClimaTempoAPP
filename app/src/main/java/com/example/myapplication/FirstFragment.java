@@ -46,31 +46,43 @@ public class FirstFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Log para verificar se o método está sendo chamado corretamente
+        Log.d(TAG, "onViewCreated chamado - Verificando o layout e o botão");
+
         // Configurar RecyclerView
         recyclerView = view.findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        weatherDataList = new ArrayList<>();
-        weatherAdapter = new WeatherAdapter(weatherDataList);
-        recyclerView.setAdapter(weatherAdapter);
+        if (recyclerView == null) {
+            Log.e(TAG, "RecyclerView não encontrado! Certifique-se de que o ID esteja correto.");
+        } else {
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            weatherDataList = new ArrayList<>();
+            weatherAdapter = new WeatherAdapter(weatherDataList);
+            recyclerView.setAdapter(weatherAdapter);
 
-        // Adicionar dados estáticos para teste
-        weatherDataList.add(new WeatherData("Monday", "20°C", "Clear Sky"));
-        weatherDataList.add(new WeatherData("Tuesday", "22°C", "Cloudy"));
-        weatherAdapter.notifyDataSetChanged();
+            // Adicionar dados estáticos para teste
+            weatherDataList.add(new WeatherData("Monday", "20°C", "Clear Sky"));
+            weatherDataList.add(new WeatherData("Tuesday", "22°C", "Cloudy"));
+            weatherAdapter.notifyDataSetChanged();
+        }
 
         // Carregar dados da API
         loadWeatherData("Toledo, PR");
 
-        // Configurar o FloatActionButton para ler o QR Code
+        // Configurar o FloatingActionButton para ler o QR Code
         FloatingActionButton fab = view.findViewById(R.id.fabScanQrCode);
-        fab.setOnClickListener(v -> {
-            IntentIntegrator integrator = IntentIntegrator.forSupportFragment(FirstFragment.this);
-            integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE);
-            integrator.setPrompt("Scan QR Code to change the city");
-            integrator.setCameraId(0); // Use a câmera traseira
-            integrator.setBeepEnabled(true);
-            integrator.initiateScan();
-        });
+        if (fab == null) {
+            Log.e(TAG, "FloatingActionButton não encontrado! Certifique-se de que o ID esteja correto no layout.");
+        } else {
+            Log.d(TAG, "FloatingActionButton encontrado, adicionando listener.");
+            fab.setOnClickListener(v -> {
+                IntentIntegrator integrator = IntentIntegrator.forSupportFragment(FirstFragment.this);
+                integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE);
+                integrator.setPrompt("Scan QR Code to change the city");
+                integrator.setCameraId(0); // Use a câmera traseira
+                integrator.setBeepEnabled(true);
+                integrator.initiateScan();
+            });
+        }
     }
 
     private void loadWeatherData(String city) {

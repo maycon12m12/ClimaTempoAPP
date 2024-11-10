@@ -45,9 +45,10 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation("androidx.recyclerview:recyclerview:1.2.1") // Adicionando dependência RecyclerView
+    implementation("androidx.recyclerview:recyclerview:1.2.1") // Dependência RecyclerView
     implementation("com.journeyapps:zxing-android-embedded:4.3.0") // ZXing para integração com Android
-    implementation("com.google.zxing:core:3.4.1")// Biblioteca core do ZXing
+    implementation("com.google.zxing:core:3.4.1") // Biblioteca core do ZXing
+    implementation("com.google.android.gms:play-services-maps:18.0.2") // Google Maps
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

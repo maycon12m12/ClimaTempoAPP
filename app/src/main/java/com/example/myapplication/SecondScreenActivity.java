@@ -1,20 +1,17 @@
 package com.example.myapplication;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-import com.journeyapps.barcodescanner.ScanOptions;
 import com.journeyapps.barcodescanner.ScanContract;
+import com.journeyapps.barcodescanner.ScanOptions;
 
 public class SecondScreenActivity extends AppCompatActivity {
 
@@ -23,12 +20,11 @@ public class SecondScreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_second_screen); // Certifique-se de que o nome do layout está correto
+        setContentView(R.layout.activity_second_screen);
 
         // Encontrando as views
         TabLayout tabLayout = findViewById(R.id.tabLayout);
         ViewPager2 viewPager = findViewById(R.id.viewPager);
-        FloatingActionButton fabScanQrCode = findViewById(R.id.fabScanQrCode);
 
         // Configurando o ViewPager com um Adapter
         ViewPagerAdapter adapter = new ViewPagerAdapter(this);
@@ -52,15 +48,6 @@ public class SecondScreenActivity extends AppCompatActivity {
                 // Passar a cidade para o FirstFragment ou tratar como necessário
                 sendCityToFragment(city);
             }
-        });
-
-        // Configurar o clique do FloatingActionButton para escanear o QR Code
-        fabScanQrCode.setOnClickListener(v -> {
-            ScanOptions options = new ScanOptions();
-            options.setPrompt("Escaneie o QR Code da cidade");
-            options.setBeepEnabled(true);
-            options.setBarcodeImageEnabled(true);
-            qrCodeLauncher.launch(options);
         });
     }
 
