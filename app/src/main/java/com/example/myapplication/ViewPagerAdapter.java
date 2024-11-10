@@ -16,9 +16,11 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position) {
             case 0:
-                return new FirstFragment(); // Fragmento da aba 1 que exibe previsões do tempo
+                return new FirstFragment(); // Fragmento que exibe a previsão do tempo
             case 1:
-                return new MapFragment(); // Substitua pelo fragmento do mapa
+                return new MapFragment(); // Fragmento que exibe o mapa
+            case 2:
+                return new AboutFragment(); // Fragmento "Sobre" com as informações pessoais
             default:
                 return new FirstFragment();
         }
@@ -26,6 +28,6 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 2; // Número de abas
+        return 3; // Número de abas
     }
 }

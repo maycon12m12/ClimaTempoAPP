@@ -32,10 +32,16 @@ public class SecondScreenActivity extends AppCompatActivity {
 
         // Associando TabLayout com ViewPager
         new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
-            if (position == 0) {
-                tab.setText("Aba 1");
-            } else if (position == 1) {
-                tab.setText("Aba 2");
+            switch (position) {
+                case 0:
+                    tab.setText("Previsão");
+                    break;
+                case 1:
+                    tab.setText("Mapa");
+                    break;
+                case 2:
+                    tab.setText("Sobre");
+                    break;
             }
         }).attach();
 
