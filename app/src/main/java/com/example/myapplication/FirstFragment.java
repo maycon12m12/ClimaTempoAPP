@@ -1,22 +1,24 @@
 package com.example.myapplication;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
+import com.journeyapps.barcodescanner.ScanContract;
+import com.journeyapps.barcodescanner.ScanOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,11 +36,26 @@ public class FirstFragment extends Fragment {
     private WeatherAdapter weatherAdapter;
     private List<WeatherData> weatherDataList;
     private String apiKey = "b60daae2"; // Chave da API para consultar o clima.
+    private SharedViewModel sharedViewModel;
+    private TextView textViewCityName;
+
+    // Registrando o launcher para ler o QR Code
+    private final ActivityResultLauncher<ScanOptions> qrCodeLauncher = registerForActivityResult(
+            new ScanContract(),
+            result -> {
+                if (result.getContents() != null) {
+                    // Atualiza a cidade no ViewModel
+                    String scannedCity = result.getContents();
+                    sharedViewModel.setCity(scannedCity);
+                    Toast.makeText(getContext(), "Cidade alterada para: " + scannedCity, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getContext(), "Leitura do QR Code cancelada", Toast.LENGTH_SHORT).show();
+                }
+            });
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        // Infla o layout manualmente
         return inflater.inflate(R.layout.fragment_first, container, false);
     }
 
@@ -46,43 +63,46 @@ public class FirstFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Log para verificar se o método está sendo chamado corretamente
-        Log.d(TAG, "onViewCreated chamado - Verificando o layout e o botão");
+        // Inicializar o ViewModel compartilhado
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+
+        // Inicializar o TextView do nome da cidade
+        textViewCityName = view.findViewById(R.id.textViewCityName);
 
         // Configurar RecyclerView
         recyclerView = view.findViewById(R.id.recyclerView);
-        if (recyclerView == null) {
-            Log.e(TAG, "RecyclerView não encontrado! Certifique-se de que o ID esteja correto.");
-        } else {
-            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            weatherDataList = new ArrayList<>();
-            weatherAdapter = new WeatherAdapter(weatherDataList);
-            recyclerView.setAdapter(weatherAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        weatherDataList = new ArrayList<>();
+        weatherAdapter = new WeatherAdapter(weatherDataList);
+        recyclerView.setAdapter(weatherAdapter);
 
-            // Adicionar dados estáticos para teste
-            weatherDataList.add(new WeatherData("Monday", "20°C", "Clear Sky"));
-            weatherDataList.add(new WeatherData("Tuesday", "22°C", "Cloudy"));
-            weatherAdapter.notifyDataSetChanged();
-        }
+        // Observar mudanças na cidade
+        sharedViewModel.getCity().observe(getViewLifecycleOwner(), city -> {
+            if (city != null && !city.isEmpty()) {
+                Log.d(TAG, "Cidade observada: " + city);
 
-        // Carregar dados da API
-        loadWeatherData("Toledo, PR");
+                // Atualizar o nome da cidade no TextView
+                textViewCityName.setText("Cidade: " + city);
+
+                // Carregar os dados do clima para a cidade observada
+                loadWeatherData(city);
+            } else {
+                // Caso a cidade não esteja definida, definir uma cidade padrão
+                String defaultCity = "Toledo, PR";
+                sharedViewModel.setCity(defaultCity);
+                Log.d(TAG, "Cidade padrão definida: " + defaultCity);
+            }
+        });
 
         // Configurar o FloatingActionButton para ler o QR Code
         FloatingActionButton fab = view.findViewById(R.id.fabScanQrCode);
-        if (fab == null) {
-            Log.e(TAG, "FloatingActionButton não encontrado! Certifique-se de que o ID esteja correto no layout.");
-        } else {
-            Log.d(TAG, "FloatingActionButton encontrado, adicionando listener.");
-            fab.setOnClickListener(v -> {
-                IntentIntegrator integrator = IntentIntegrator.forSupportFragment(FirstFragment.this);
-                integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE);
-                integrator.setPrompt("Scan QR Code to change the city");
-                integrator.setCameraId(0); // Use a câmera traseira
-                integrator.setBeepEnabled(true);
-                integrator.initiateScan();
-            });
-        }
+        fab.setOnClickListener(v -> {
+            ScanOptions options = new ScanOptions();
+            options.setPrompt("Escaneie o QR Code da cidade");
+            options.setBeepEnabled(true);
+            options.setBarcodeImageEnabled(true);
+            qrCodeLauncher.launch(options);
+        });
     }
 
     private void loadWeatherData(String city) {
@@ -109,8 +129,9 @@ public class FirstFragment extends Fragment {
                         ));
                     }
                     weatherAdapter.notifyDataSetChanged();
+                    Log.d(TAG, "Dados de previsão do tempo carregados com sucesso para: " + city);
                 } else {
-                    Log.e(TAG, "onResponse: Falha ao obter dados da API");
+                    Log.e(TAG, "onResponse: Falha ao obter dados da API - Código de resposta: " + response.code());
                     Toast.makeText(getContext(), "Falha ao obter dados da API", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -121,26 +142,5 @@ public class FirstFragment extends Fragment {
                 Toast.makeText(getContext(), "Erro: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if (result != null) {
-            if (result.getContents() != null) {
-                // Quando um QR Code é lido, use o conteúdo para carregar os dados do tempo
-                String scannedCity = result.getContents();
-                loadWeatherData(scannedCity);
-                Toast.makeText(getContext(), "Cidade alterada para: " + scannedCity, Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(getContext(), "Leitura do QR Code cancelada", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
     }
 }

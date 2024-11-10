@@ -49,6 +49,8 @@ dependencies {
     implementation("com.journeyapps:zxing-android-embedded:4.3.0") // ZXing para integração com Android
     implementation("com.google.zxing:core:3.4.1") // Biblioteca core do ZXing
     implementation("com.google.android.gms:play-services-maps:18.0.2") // Google Maps
+    implementation("androidx.fragment:fragment-ktx:1.3.6")
+    implementation("androidx.activity:activity-ktx:1.2.3")
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

@@ -17,7 +17,19 @@
         android:textStyle="bold"
         android:textColor="@android:color/black"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginBottom="16dp" />
+
+    <!-- Nome da cidade -->
+    <TextView
+        android:id="@+id/textViewCityName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cidade"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp" />
 
     <!-- RecyclerView para exibir as previsões do tempo -->
     <androidx.recyclerview.widget.RecyclerView
