@@ -72,6 +72,24 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             case "toledo, pr":
                 location = new LatLng(-24.7199, -53.7433); // Coordenadas de Toledo, PR
                 break;
+            case "curitiba, pr":
+                location = new LatLng(-25.4284, -49.2733); // Coordenadas de Curitiba, PR
+                break;
+            case "londrina, pr":
+                location = new LatLng(-23.3103, -51.1628); // Coordenadas de Londrina, PR
+                break;
+            case "maringá, pr":
+                location = new LatLng(-23.4205, -51.9331); // Coordenadas de Maringá, PR
+                break;
+            case "cascavel, pr":
+                location = new LatLng(-24.9555, -53.4553); // Coordenadas de Cascavel, PR
+                break;
+            case "foz do iguaçu, pr":
+                location = new LatLng(-25.5163, -54.5854); // Coordenadas de Foz do Iguaçu, PR
+                break;
+            case "ponta grossa, pr":
+                location = new LatLng(-25.0945, -50.1630); // Coordenadas de Ponta Grossa, PR
+                break;
             default:
                 // Caso não encontre a cidade, defina um valor padrão
                 Toast.makeText(getContext(), "Cidade não encontrada. Exibindo Toledo, PR por padrão.", Toast.LENGTH_SHORT).show();
@@ -86,3 +104,4 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         }
     }
 }
+

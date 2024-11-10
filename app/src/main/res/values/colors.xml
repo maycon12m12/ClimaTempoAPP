@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="primaryColor">#6200EE</color> <!-- Roxo usado como cor principal -->
+    <color name="primaryLight">#BB86FC</color> <!-- Tom mais claro do roxo -->
+    <color name="primaryDark">#3700B3</color> <!-- Tom mais escuro do roxo -->
+    <color name="secondaryColor">#03DAC5</color> <!-- Cor secundária (verde água) -->
+    <color name="backgroundColor">#FFFFFF</color> <!-- Cor do fundo da aplicação -->
+    <color name="primaryTextColor">#000000</color> <!-- Cor preta para o texto -->
+    <color name="white">#FFFFFF</color> <!-- Branco -->
+    <color name="black">#000000</color> <!-- Preto -->
 </resources>

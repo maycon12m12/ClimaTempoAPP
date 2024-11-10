@@ -3,17 +3,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:gravity="center_horizontal">
+    android:gravity="center"
+    android:background="@color/backgroundColor"
+    android:padding="24dp">
 
-    <!-- Foto do Aluno -->
+    <!-- Seção para foto do aluno com contorno e arredondamento aplicado diretamente -->
     <ImageView
         android:id="@+id/imageViewProfile"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:src="@drawable/ic_profile"
         android:layout_marginBottom="16dp"
-        android:contentDescription="Foto do aluno" />
+        android:contentDescription="Foto do aluno"
+        android:scaleType="centerCrop"
+        android:background="@android:color/white"
+        android:padding="4dp"
+        android:elevation="4dp"
+        android:outlineProvider="bounds"
+        android:clipToOutline="true"
+        android:layout_gravity="center"/>
 
     <!-- Nome do Aluno -->
     <TextView
@@ -21,7 +29,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Nome: Maycon Juan Cassiano dos Santos"
-        android:textSize="18sp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
         android:layout_marginBottom="8dp" />
 
     <!-- RA do Aluno -->
@@ -31,6 +41,7 @@
         android:layout_height="wrap_content"
         android:text="RA: 09044019"
         android:textSize="18sp"
+        android:textColor="@android:color/darker_gray"
         android:layout_marginBottom="8dp" />
 
     <!-- Curso do Aluno -->
@@ -39,5 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Curso: Análise e Desenvolvimento de Sistemas"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:textColor="@android:color/darker_gray" />
+
 </LinearLayout>
