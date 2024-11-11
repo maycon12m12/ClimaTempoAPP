@@ -8,4 +8,5 @@
     <color name="primaryTextColor">#000000</color> <!-- Cor preta para o texto -->
     <color name="white">#FFFFFF</color> <!-- Branco -->
     <color name="black">#000000</color> <!-- Preto -->
+    <color name="light_blue">#ADD8E6</color>
 </resources>

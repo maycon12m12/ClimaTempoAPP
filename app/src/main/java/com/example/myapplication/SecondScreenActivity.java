@@ -5,6 +5,7 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -44,12 +45,22 @@ public class SecondScreenActivity extends AppCompatActivity {
                     tab.setText("Mapa");
                     break;
                 case 2:
-                    tab.setText("Sobre");
+                    tab.setIcon(R.drawable.menu_3); // Usa o VectorDrawable preto para o ícone de três pontinhos
+                    if (tab.getIcon() != null) {
+                        tab.getIcon().setTint(ContextCompat.getColor(this, android.R.color.black)); // Define o ícone como preto
+                    }
                     break;
             }
         }).attach();
 
-        // Configurando o QR Code Scanner usando ActivityResultLauncher
+
+
+        tabLayout.setTabTextColors(
+                ContextCompat.getColor(this, android.R.color.black),         // Cor das abas inativas
+                ContextCompat.getColor(this, android.R.color.black)          // Cor da aba ativa
+        );
+        tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(this, android.R.color.black)); // Cor do indicador
+
         qrCodeLauncher = registerForActivityResult(new ScanContract(), result -> {
             if (result.getContents() != null) {
                 // Cidade obtida do QR Code
