@@ -35,9 +35,9 @@ Este projeto foi desenvolvido como parte da Atividade Prática Orientada (APO) p
 - **QR Code**: Biblioteca [ZXing](https://github.com/journeyapps/zxing-android-embedded)
 - **Mapas**: [Google Maps API](https://developers.google.com/maps/documentation/android-sdk/start)
 
-
-- **Nome**: MAYCON JUAN CASSIANO DOS SANTOS
--**RA**: 09044019
--**Curso**: ANÁLISE E DESENVOLVIMENTO DE SISTEMAS
--**Polo**: TOLEDO-PR
+## Autor
+- **Nome**: MAYCON JUAN CASSIANO DOS SANTOS.
+-**RA**: 09044019.
+-**Curso**: ANÁLISE E DESENVOLVIMENTO DE SISTEMAS.
+-**Polo**: TOLEDO-PR.
 
